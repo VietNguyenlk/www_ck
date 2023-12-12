@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8" >
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/search-by-name}">
+    Name: <input name="name">
+    <input type="submit">
+</form>
+
+<form th:action="@{/search-by-status}">
+    <select name="status"> <option value="ACTIVE" th:text="ACTIVE" > </option>
+                            <option value="INACTIVE" th:text="INACTIVE" > </option>
+    </select>
+    <INPUT type="submit" value="find">
+
+
+</form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>name </th>
+                <th>description</th>
+                <th>manufature name</th>
+                <th>status</th>
+                <th>unit</th>
+                <th > <a th:href="@{/add}">add </a></th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr th:each="p : ${paging.content}">
+                <td th:text="${p.productId}"></td>
+                <td th:text="${p.name}"></td>
+                <td th:text="${p.description}"></td>
+                <td th:text="${p.manufacturerName}"></td>
+                <td th:text="${p.status}"></td>
+                <td th:text="${p.unit}"></td>
+                <td> <a th:href="@{/detail/{id}(id=${p.productId})}">  detail  </a> </td>
+                <td><a th:href="@{/delete/{id}(id=${p.productId})}" > delete</a></td>
+
+
+            </tr>
+
+        </tbody>
+
+
+    </table>
+        <div th:if="${paging.totalPages>0}"
+        th:each="number:${pageNumbers}"
+        >
+
+            <a th:href="@{/product-paging(pageNumber=${number})}"
+            th:text="${number}"
+
+            >
+
+            </a>
+
+
+
+        </div>
+
+</body>
+</html>
